@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void kaprekarNumbers(int p, int q) {
+    int found = 0;
+    for (int n = p; n <= q; n++) {
+        long sq = (long)n * n;
+        char str[32];
+        sprintf(str, "%ld", sq);
+
+        int len = strlen(str);
+        int d = snprintf(NULL, 0, "%d", n);  // number of digits in n
+
+        char left[32] = "", right[32] = "";
+        if (len > d) {
+            strncpy(left, str, len - d);
+            left[len - d] = '\0';
+            strncpy(right, str + len - d, d);
+            right[d] = '\0';
+        } else {
+            strcpy(right, str);
+        }
+
+        int l = left[0] ? atoi(left) : 0;
+        int r = atoi(right);
+
+        if (l + r == n) {
+            printf("%d ", n);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("INVALID RANGE");
+    }
+    printf("\n");
+}
